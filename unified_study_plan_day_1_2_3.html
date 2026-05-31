@@ -1,0 +1,517 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Unified Day 1-3 Study Plan</title>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --bg-color: #0b0f19;
+            --container-bg: #131a26;
+            --text-color: #e2e8f0;
+            --text-muted: #94a3b8;
+            --primary: #6366f1;
+            --primary-glow: rgba(99, 102, 241, 0.15);
+            --accent: #06b6d4;
+            --accent-glow: rgba(6, 182, 212, 0.15);
+            --border-color: #1e293b;
+            --code-bg: #1e293b;
+            --highlight: #3b82f6;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            font-family: 'Outfit', sans-serif;
+            line-height: 1.6;
+            padding: 2rem 1rem;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            background-color: var(--container-bg);
+            padding: 3rem;
+            border-radius: 16px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+            border: 1px solid var(--border-color);
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, #a5b4fc 0%, var(--primary) 50%, var(--accent) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 0.5rem;
+            text-align: left;
+        }
+
+        h2 {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: #f1f5f9;
+            margin-top: 2.5rem;
+            margin-bottom: 1.2rem;
+            border-bottom: 2px solid var(--border-color);
+            padding-bottom: 0.4rem;
+            display: flex;
+            align-items: center;
+        }
+
+        h3 {
+            font-size: 1.3rem;
+            font-weight: 600;
+            color: #f8fafc;
+            margin-top: 1.8rem;
+            margin-bottom: 0.8rem;
+        }
+
+        h4 {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: #cbd5e1;
+            margin-top: 1.2rem;
+            margin-bottom: 0.6rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        p {
+            margin-bottom: 1.2rem;
+            color: #cbd5e1;
+        }
+
+        blockquote {
+            border-left: 4px solid var(--primary);
+            background-color: rgba(99, 102, 241, 0.05);
+            padding: 1rem 1.5rem;
+            margin: 1.5rem 0;
+            border-radius: 4px;
+            font-style: italic;
+        }
+
+        blockquote p {
+            margin-bottom: 0;
+            color: #e2e8f0;
+        }
+
+        a {
+            color: var(--accent);
+            text-decoration: none;
+            transition: color 0.2s ease;
+        }
+
+        a:hover {
+            color: #22d3ee;
+            text-decoration: underline;
+        }
+
+        ul, ol {
+            margin-bottom: 1.2rem;
+            padding-left: 2rem;
+        }
+
+        li {
+            margin-bottom: 0.5rem;
+        }
+
+        code {
+            font-family: 'JetBrains Mono', monospace;
+            background-color: var(--code-bg);
+            padding: 0.2rem 0.4rem;
+            border-radius: 4px;
+            font-size: 0.9em;
+            color: #fda4af;
+        }
+
+        pre {
+            background-color: #0f172a;
+            padding: 1.5rem;
+            border-radius: 12px;
+            overflow-x: auto;
+            border: 1px solid var(--border-color);
+            margin: 1.5rem 0;
+        }
+
+        pre code {
+            background-color: transparent;
+            padding: 0;
+            border-radius: 0;
+            color: #38bdf8;
+            font-size: 0.9em;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1.5rem 0;
+            font-size: 0.95rem;
+        }
+
+        th, td {
+            padding: 0.8rem 1rem;
+            text-align: left;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        th {
+            background-color: rgba(99, 102, 241, 0.05);
+            font-weight: 600;
+            color: #f1f5f9;
+        }
+
+        tr:hover {
+            background-color: rgba(255, 255, 255, 0.02);
+        }
+
+        hr {
+            border: 0;
+            height: 1px;
+            background: linear-gradient(to right, transparent, var(--border-color), transparent);
+            margin: 2.5rem 0;
+        }
+
+        /* Tip Alert Styling */
+        .tip {
+            background-color: var(--primary-glow);
+            border: 1px solid var(--primary);
+            padding: 1.2rem;
+            border-radius: 8px;
+            margin: 1.5rem 0;
+            color: #e2e8f0;
+        }
+
+        .tip p {
+            margin: 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🗺️ Unified Day 1–3 Foundation Study Plan</h1>
+<blockquote>
+<p>A synthesized acceleration guide bridging all engineering, systems, database, networking, and programming roadmaps in this workspace.</p>
+</blockquote>
+<hr />
+<h2>🔍 Section 1: Individual Day 1 &amp; Day 2 Plans Across All Roadmaps</h2>
+<p>Here is a summary of what is scheduled for Day 1 and Day 2 across every roadmap (<code>.md</code> file) in your workspace:</p>
+<h3>1. Systems &amp; Architecture Roadmaps</h3>
+<ul>
+<li><strong><code>system design01.md</code></strong><ul>
+<li><strong>Day 1:</strong> How Computers Actually Work (Von Neumann Architecture, boot sequence, binary/hex, latency cheat sheet, hand-drawn architecture diagram, set up GitHub).</li>
+<li><strong>Day 2:</strong> CPU Deep Dive &amp; Memory Hierarchy (Fetch-decode-execute, L1/L2/L3 caches, cache hits/misses, clock speed vs cores, hyper-threading, Moore's Law, Python list vs array benchmark).</li>
+</ul>
+</li>
+<li><strong><code>system design.md</code></strong><ul>
+<li><strong>Day 1:</strong> The OSI Model (7 layers, protocols, mapping real-world behaviors, packet captures using <code>tcpdump</code> or Wireshark over Python <code>http.server</code>).</li>
+<li><strong>Day 2:</strong> TCP Deep Dive (3-way handshake, socket programming in Python, connection pool vs opening new connections, flow control).</li>
+</ul>
+</li>
+<li><strong><code>personal management.md</code></strong><ul>
+<li><strong>Day 1:</strong> How a Computer Works (Binary representation, CPU cycles, memory hierarchy, OS layer, write <code>computer_model.md</code>).</li>
+<li><strong>Day 2:</strong> Operating System Deep Dive (Directory tree, inodes, process monitoring via <code>ps</code>/<code>top</code>/<code>htop</code>, permissions, environment vars, bash piping).</li>
+</ul>
+</li>
+</ul>
+<h3>2. Networking &amp; Databases Roadmaps</h3>
+<ul>
+<li><strong><code>computer netwoek.md</code></strong><ul>
+<li><strong>Day 1:</strong> The OSI Model (7-layer mapping, Wireshark install, packet layer analysis, Hashnode post).</li>
+<li><strong>Day 2:</strong> Physical Layer Deep Dive (Copper/fiber optic physics, dBm signal measurements, Wi-Fi 2.4/5/6GHz, bandwidth vs latency).</li>
+</ul>
+</li>
+<li><strong><code>database.md</code></strong><ul>
+<li><strong>Day 1:</strong> How Computers Work (Hardware Foundation: CPU, RAM, HDD/SSD/NVMe latency difference, filesystems like ext4/NTFS).</li>
+<li><strong>Day 2:</strong> Linux Command Line Basics (File ops, process monitoring, permissions, package managers like <code>apt</code>, SSH basics).</li>
+</ul>
+</li>
+</ul>
+<h3>3. Engineering &amp; Project Roadmaps (InfraMesh, PulseGrid, SentinelGrid, MemCore)</h3>
+<ul>
+<li><strong><code>basic roadmap 4 project.md</code> &amp; <code>InfraMesh _SentinelGrid _PulseGrid _MemCore .md</code></strong><ul>
+<li><strong>Day 1:</strong> How the Internet Works (DNS resolution, IP address lookup, TCP handshake, HTTP request/response cycle, DevTools Network tab tracing, curl/dig CLI).</li>
+<li><strong>Day 2:</strong> Load Balancers, Proxies, and Routing (Forward vs reverse proxy, load balancing algorithms, Nginx local reverse proxy setup, health checks).</li>
+</ul>
+</li>
+<li><strong><code>data pattern+web tools.md</code></strong><ul>
+<li><strong>Day 1:</strong> Linux Terminal (Server navigation, file manipulation, output redirect, logging analysis using <code>tail -f</code>).</li>
+<li><strong>Day 2:</strong> Python Foundations (Syntax, data types, lists, dicts, tuples, control flow, scripting a basic system simulator).</li>
+</ul>
+</li>
+</ul>
+<h3>4. Language &amp; AI Development Roadmaps</h3>
+<ul>
+<li><strong><code>agentic ai.md</code></strong><ul>
+<li><strong>Day 1:</strong> Setup + Linux + Git Foundations (WSL2 setup, basic shell navigation, Git mental model and workflow, Hashnode/GitHub setup).</li>
+<li><strong>Day 2:</strong> Python: Data Types, Control Flow, Functions (Explicit philosophy, collection types, control structures, custom functions).</li>
+</ul>
+</li>
+<li><strong><code>job hunt rust.md</code></strong><ul>
+<li><strong>Go Track:</strong><ul>
+<li><strong>Day 1:</strong> Go setup, variables, basic types, comparing simple syntax to Python.</li>
+<li><strong>Day 2:</strong> Go functions, multiple returns, idiomatic error handling.</li>
+</ul>
+</li>
+<li><strong>Rust Track:</strong><ul>
+<li><strong>Day 1:</strong> Rust setup, variables, immutability by default, first program.</li>
+<li><strong>Day 2:</strong> Rust data types, arithmetic, integer overflow panics.</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><strong><code>job hunt.md</code> &amp; <code>job hunt 0.md</code></strong><ul>
+<li><strong>Day 1:</strong> How Computers Work (CPU execution, RAM workbench analogy, SSD cabinet storage, latency comparison).</li>
+<li><strong>Day 2:</strong> Linux Command Line (Pipes, redirection, file permissions, shell variables).</li>
+</ul>
+</li>
+</ul>
+<h3>5. Embedded Systems &amp; Hardware AI Roadmaps</h3>
+<ul>
+<li><strong><code>embeddedai.md</code></strong><ul>
+<li><strong>Day 1:</strong> What a Computer is at the Lowest Level (Binary, transistors, bits/bytes/words, hexadecimal addresses like <code>0x40021000</code>).</li>
+<li><strong>Day 2:</strong> Logic Gates (AND, OR, NOT, NAND universality, truth tables, XOR checksums).</li>
+</ul>
+</li>
+</ul>
+<hr />
+<h2>⚡ Section 2: Overlaps &amp; Similarities (The Core Pillars)</h2>
+<p>By auditing all 22 roadmaps, we find that their first two days focus on <strong>four foundational pillars</strong>:</p>
+<div class="codehilite"><pre><span></span><code><span class="nf">graph</span><span class="w"> </span><span class="n">TD</span>
+<span class="w">    </span><span class="n">A</span><span class="p">[</span><span class="n">Foundational</span><span class="w"> </span><span class="n">Pillars</span><span class="w"> </span><span class="kr">of</span><span class="w"> </span><span class="n">Day</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="o">&amp;</span><span class="w"> </span><span class="mi">2</span><span class="p">]</span><span class="w"> </span><span class="o">--&gt;</span><span class="w"> </span><span class="n">B</span><span class="p">(</span><span class="n">Pillar</span><span class="w"> </span><span class="mi">1</span><span class="o">:</span><span class="w"> </span><span class="n">Hardware</span><span class="w"> </span><span class="o">&amp;</span><span class="w"> </span><span class="n">Physics</span><span class="p">)</span>
+<span class="w">    </span><span class="n">A</span><span class="w"> </span><span class="o">--&gt;</span><span class="w"> </span><span class="n">C</span><span class="p">(</span><span class="n">Pillar</span><span class="w"> </span><span class="mi">2</span><span class="o">:</span><span class="w"> </span><span class="n">OS</span><span class="w"> </span><span class="o">&amp;</span><span class="w"> </span><span class="n">Linux</span><span class="w"> </span><span class="n">Terminal</span><span class="p">)</span>
+<span class="w">    </span><span class="n">A</span><span class="w"> </span><span class="o">--&gt;</span><span class="w"> </span><span class="n">D</span><span class="p">(</span><span class="n">Pillar</span><span class="w"> </span><span class="mi">3</span><span class="o">:</span><span class="w"> </span><span class="n">Version</span><span class="w"> </span><span class="n">Control</span><span class="p">)</span>
+<span class="w">    </span><span class="n">A</span><span class="w"> </span><span class="o">--&gt;</span><span class="w"> </span><span class="n">E</span><span class="p">(</span><span class="n">Pillar</span><span class="w"> </span><span class="mi">4</span><span class="o">:</span><span class="w"> </span><span class="n">Network</span><span class="w"> </span><span class="n">Physics</span><span class="p">)</span>
+
+<span class="w">    </span><span class="n">B</span><span class="w"> </span><span class="o">--&gt;</span><span class="w"> </span><span class="n">B1</span><span class="p">(</span><span class="n">Von</span><span class="w"> </span><span class="n">Neumann</span><span class="w"> </span><span class="n">Architecture</span><span class="p">,</span><span class="w"> </span><span class="n">Latency</span><span class="w"> </span><span class="n">Hierarchy</span><span class="p">,</span><span class="w"> </span><span class="n">Bits</span><span class="o">/</span><span class="n">Bytes</span><span class="p">)</span>
+<span class="w">    </span><span class="n">C</span><span class="w"> </span><span class="o">--&gt;</span><span class="w"> </span><span class="n">C1</span><span class="p">(</span><span class="n">Navigation</span><span class="p">,</span><span class="w"> </span><span class="n">Processes</span><span class="p">,</span><span class="w"> </span><span class="n">Pipes</span><span class="p">,</span><span class="w"> </span><span class="n">Redirection</span><span class="p">,</span><span class="w"> </span><span class="n">Permissions</span><span class="p">)</span>
+<span class="w">    </span><span class="n">D</span><span class="w"> </span><span class="o">--&gt;</span><span class="w"> </span><span class="n">D1</span><span class="p">(</span><span class="n">Git</span><span class="w"> </span><span class="n">Staging</span><span class="o">/</span><span class="n">Committing</span><span class="p">,</span><span class="w"> </span><span class="kr">Local</span><span class="w"> </span><span class="n">vs</span><span class="w"> </span><span class="n">Remote</span><span class="w"> </span><span class="n">GitHub</span><span class="p">)</span>
+<span class="w">    </span><span class="n">E</span><span class="w"> </span><span class="o">--&gt;</span><span class="w"> </span><span class="n">E1</span><span class="p">(</span><span class="n">OSI</span><span class="w"> </span><span class="mi">7</span><span class="w"> </span><span class="n">Layers</span><span class="p">,</span><span class="w"> </span><span class="n">TCP</span><span class="w"> </span><span class="n">Handshake</span><span class="p">,</span><span class="w"> </span><span class="n">DNS</span><span class="w"> </span><span class="o">&amp;</span><span class="w"> </span><span class="n">HTTP</span><span class="p">)</span>
+</code></pre></div>
+
+<ol>
+<li><strong>Hardware &amp; Physics of Computing:</strong> You cannot write high-performance databases, embedded firmware, or scalable backends without understanding the speed gap between CPU cache (nanoseconds), RAM (100ns), and SSD (100µs).</li>
+<li><strong>OS &amp; Linux Terminal:</strong> Production software (FastAPI, Nginx, PostgreSQL, Docker, Kafka) runs on Linux. The terminal is your primary interface when things break.</li>
+<li><strong>Version Control (Git &amp; GitHub):</strong> Establishing daily commit habits, staging areas, and pushing to public portfolios is the baseline proof-of-work across every roadmap.</li>
+<li><strong>Network Physics:</strong> Web applications, databases, and microservices interact over the network. Understanding DNS, TCP connection handshakes, and port bindings is the ultimate debugging skill.</li>
+</ol>
+<hr />
+<h2>📅 Section 3: The Unified Day 1, 2, &amp; 3 Study Plan</h2>
+<p>This consolidated study plan integrates all topics from the individual files into a single, logical 3-day path.</p>
+<h3>📅 DAY 1: Hardware Foundations, Computer Architecture &amp; Basic Operating Systems</h3>
+<p><em>Focus: Demystifying the physical machine, binary systems, and memory hierarchy.</em></p>
+<h4>🌅 Morning Block: Theory &amp; Concept (2 hrs)</h4>
+<ul>
+<li><strong>Von Neumann Architecture:</strong> Learn how CPU, RAM, Disk, System Bus, and I/O interface together.</li>
+<li><strong>Memory Hierarchy &amp; Latency numbers:</strong> Understand the physical access time differences:<ul>
+<li>L1/L2/L3 Cache (0.5ns – 30ns)</li>
+<li>RAM (100ns)</li>
+<li>SSD/NVMe (100µs)</li>
+<li>HDD (10ms)</li>
+<li>Internet/Network hops (50ms – 150ms)</li>
+</ul>
+</li>
+<li><strong>Low-Level Representation:</strong> Learn binary (base-2), hexadecimal (base-16), bits, bytes, words (32-bit vs 64-bit), and logic gates (AND, OR, NOT, NAND, XOR).</li>
+<li><strong>OS Role:</strong> How the OS coordinates hardware resources, isolates processes, and handles files on disk.</li>
+</ul>
+<h4>🛠️ Afternoon Block: Practical Tasks (2 hrs)</h4>
+<ol>
+<li><strong>Setup Dev Environment:</strong> Install WSL2 (Ubuntu) if on Windows. Set up VS Code.</li>
+<li><strong>Draw by Hand:</strong> Sketch a system diagram showing CPU, L1/L2/L3 caches, RAM, SSD/HDD, and NIC connected by the system bus. Write down real-world latency analogies (e.g., L1 cache = reaching into your pocket; SSD = walking to a library; Network = flying to another country).</li>
+<li><strong>Inspect Machine Specs:</strong> Open your Linux terminal and run:<br />
+<code>bash
+    lscpu
+    cat /proc/cpuinfo
+    free -h
+    df -h</code><br />
+    Analyze the number of cores, cache sizes, memory capacity, and disk space.</li>
+<li><strong>Hardware Model Essay:</strong> Write a 300-word explanation detailing what happens when you press a key on your keyboard until characters render on the screen. Save it as <code>computer_model.md</code>.</li>
+</ol>
+<hr />
+<h3>📅 DAY 2: Linux Terminal, Shell Mechanics, and Operating System Internals</h3>
+<p><em>Focus: Master the shell environment, redirection, pipes, process tables, and file configurations.</em></p>
+<h4>🌅 Morning Block: Theory &amp; Concept (2 hrs)</h4>
+<ul>
+<li><strong>Why CLI over GUI:</strong> CLI is fast, programmable, scriptable, and the only interface available on headless production servers.</li>
+<li><strong>Linux Directory Hierarchy:</strong> Understand where things live:<ul>
+<li><code>/etc</code> (configs), <code>/var/log</code> (server logs), <code>/proc</code> (live process info), <code>/tmp</code> (temp files), <code>/home</code> (user profiles).</li>
+</ul>
+</li>
+<li><strong>Pipes and Redirection:</strong> How stdout, stdin, stderr, <code>&gt;</code>, <code>&gt;&gt;</code>, <code>2&gt;</code>, and <code>|</code> connect programs to process complex datasets.</li>
+<li><strong>Permissions &amp; Management:</strong> Read permissions (<code>rwx</code> / 755), users/groups (<code>chmod</code>/<code>chown</code>), and the process state model (Running, Sleeping, Zombie).</li>
+</ul>
+<h4>🛠️ Afternoon Block: Practical Tasks (2 hrs)</h4>
+<ol>
+<li><strong>Command Practice:</strong> Open your terminal and run these commands to inspect and manipulate:<br />
+<code>bash
+    pwd &amp;&amp; ls -la
+    mkdir -p phase-0-survival/logs
+    touch phase-0-survival/logs/app.log
+    echo "test log entry" &gt;&gt; phase-0-survival/logs/app.log
+    ps aux | grep -i init
+    top -n 1</code></li>
+<li><strong>Pipes and Filters Practice:</strong> Use piping to extract specific data from your operating system logs:<br />
+<code>bash
+    cat /proc/meminfo | grep -i Mem
+    ls -la /var/log | sort -k 5 -h</code></li>
+<li><strong>Interactive Wargames:</strong> Work through <strong>OverTheWire Bandit</strong> levels 0 through 10 (https://overthewire.org/wargames/bandit/).</li>
+<li><strong>Bash Scripting:</strong> Write a simple shell script named <code>backup_system.sh</code> that lists files, copies them to a directory, and appends a date tag. Set execute permissions: <code>chmod +x backup_system.sh</code>.</li>
+</ol>
+<hr />
+<h3>📅 DAY 3: Version Control (Git) &amp; Network Physics</h3>
+<p><em>Focus: Code lineage, collaborative engineering, local/remote workflows, and the 7 layers of network traffic.</em></p>
+<h4>🌅 Morning Block: Theory &amp; Concept (2 hrs)</h4>
+<ul>
+<li><strong>Git Objects &amp; Flow:</strong> Blobs, trees, commits. The transition states: Working Directory ➔ Staging Area ➔ Local Repository ➔ Remote Repository.</li>
+<li><strong>Branching Mechanics:</strong> Merge vs Rebase, resolving conflicts, and managing clean histories.</li>
+<li><strong>The OSI Model:</strong> Review the 7 layers (Physical ➔ Data Link ➔ Network ➔ Transport ➔ Session ➔ Presentation ➔ Application).</li>
+<li><strong>Transport Protocols:</strong> The TCP 3-way handshake (<code>SYN</code>, <code>SYN-ACK</code>, <code>ACK</code>), reliability via sequence numbers and ACKs, flow control (sliding window) vs the fire-and-forget speed of UDP/QUIC.</li>
+<li><strong>The Request Cycle:</strong> Step-by-step path of typing a URL, query DNS, opening port 443, and receiving HTTP responses.</li>
+</ul>
+<h4>🛠️ Afternoon Block: Practical Tasks (2 hrs)</h4>
+<ol>
+<li><strong>Git initialization &amp; Setup:</strong><ul>
+<li>Set up a GitHub account, add SSH keys to your terminal.</li>
+<li>Create a repository <code>learning-journal</code> locally:<br />
+<code>bash
+    git init learning-journal
+    cd learning-journal
+    echo "# Learning Journal" &gt; README.md
+    git add README.md
+    git commit -m "docs: initialize learning journal"</code></li>
+<li>Link to remote GitHub repository and push: <code>git push -u origin main</code>.</li>
+</ul>
+</li>
+<li><strong>Write <code>.gitignore</code>:</strong> Learn to exclude sensitive configuration credentials and local directories (e.g. <code>.env</code>, <code>__pycache__/</code>, <code>.vscode/</code>).</li>
+<li><strong>Wireshark/tcpdump Networking Lab:</strong><ul>
+<li>Install Wireshark (GUI) or run <code>tcpdump</code> in your WSL terminal.</li>
+<li>Run a local web server:<br />
+<code>bash
+    python3 -m http.server 8080 &amp;</code></li>
+<li>Start a packet capture filtering for <code>tcp port 8080</code>.</li>
+<li>In a second terminal, execute <code>curl http://localhost:8080/</code>.</li>
+<li>Analyze the dump: identify the SYN, SYN-ACK, ACK handshake packets, sequence/acknowledgement numbers, and the HTTP request/response payloads.</li>
+</ul>
+</li>
+<li><strong>Portfolio Push:</strong> Push your Day 1 <code>computer_model.md</code> and Day 2 scripts to GitHub using the Git workflow.</li>
+</ol>
+<hr />
+<h2>🛠️ Section 4: Programming Tracks (Choose Your Lang for Day 4+)</h2>
+<p>If your target roadmap prioritizes programming syntax over infrastructure first, here are the Day 1–3 equivalents:</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Day</th>
+<th style="text-align: left;">Python Track (<code>agentic ai</code>, <code>os.md</code>)</th>
+<th style="text-align: left;">Rust Track (<code>job hunt rust</code>)</th>
+<th style="text-align: left;">Go Track (<code>job hunt rust</code>)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>Day 1</strong></td>
+<td style="text-align: left;">Python syntax, data types (<code>int</code>/<code>float</code>/<code>str</code>/<code>bool</code>), and collection structures (<code>list</code>/<code>dict</code>/<code>set</code>).</td>
+<td style="text-align: left;">Install Rust, build Hello World, learn variables, bindings, and immutability by default.</td>
+<td style="text-align: left;">Install Go, configure workspace paths, run Hello World, variables and basic structures.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Day 2</strong></td>
+<td style="text-align: left;">Control flow (<code>if</code>/<code>elif</code>/<code>else</code>, <code>for</code>/<code>while</code> loops), functions, scope, <code>*args</code>/<code>**kwargs</code>.</td>
+<td style="text-align: left;">System Types, signed/unsigned bounds, arithmetic overflow protection.</td>
+<td style="text-align: left;">Functions, multiple return arguments, and idiomatic error handling.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Day 3</strong></td>
+<td style="text-align: left;">Object-Oriented Programming (Classes, inheritance, <code>self</code>), file I/O, <code>try/except</code> blocks.</td>
+<td style="text-align: left;">Control Flow syntax, match expressions, loops.</td>
+<td style="text-align: left;">Control Flow (<code>for</code> loops variations, <code>if</code>, <code>switch</code>).</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2>🎯 Section 5: Roadmap Completion Mapping (What is Checked Off)</h2>
+<p>Completing this unified 3-day plan will fulfill the initial progress requirements for <strong>eleven different roadmaps</strong> simultaneously:</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Roadmap File</th>
+<th style="text-align: left;">Progress Checked Off</th>
+<th style="text-align: left;">Completed Topics</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong><code>agentic ai.md</code></strong></td>
+<td style="text-align: left;"><strong>Days 1–2</strong></td>
+<td style="text-align: left;">Environment setup, Linux fundamentals, Git foundations, basic Python structures.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong><code>system design01.md</code></strong></td>
+<td style="text-align: left;"><strong>Days 1–3</strong></td>
+<td style="text-align: left;">Hardware, CPU deep dive, memory hierarchy, basic Linux OS structure, commands.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong><code>system design.md</code></strong></td>
+<td style="text-align: left;"><strong>Days 1–2</strong></td>
+<td style="text-align: left;">OSI 7-layer framework, TCP 3-way handshake, python socket scripting, Wireshark.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong><code>personal management.md</code></strong></td>
+<td style="text-align: left;"><strong>Days 1–3</strong></td>
+<td style="text-align: left;">Computer hardware, OS process monitoring (<code>htop</code>), Git repositories.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong><code>computer netwoek.md</code></strong></td>
+<td style="text-align: left;"><strong>Day 1</strong></td>
+<td style="text-align: left;">OSI model breakdown, Wireshark installation and traffic analysis.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong><code>database.md</code></strong></td>
+<td style="text-align: left;"><strong>Days 1–3</strong></td>
+<td style="text-align: left;">Hardware latency rules, Linux files/commands, database network port connections.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong><code>basic roadmap 4 project.md</code></strong></td>
+<td style="text-align: left;"><strong>Days 1–3</strong></td>
+<td style="text-align: left;">DNS resolution, load balancing, proxy configurations, Linux command syntax.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong><code>InfraMesh _SentinelGrid ...md</code></strong></td>
+<td style="text-align: left;"><strong>Days 1–3</strong></td>
+<td style="text-align: left;">HTTP/DNS mechanisms, reverse proxy load-balancers, local Linux operations.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong><code>os.md</code></strong></td>
+<td style="text-align: left;"><strong>Days 1–2</strong></td>
+<td style="text-align: left;">Linux navigation, redirect filters, vim config, shell scripting basics.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong><code>embeddedai.md</code></strong></td>
+<td style="text-align: left;"><strong>Day 1</strong></td>
+<td style="text-align: left;">Low-level hardware architecture, bits, bytes, and memory storage logic.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong><code>job hunt.md</code> / <code>job hunt 0.md</code></strong></td>
+<td style="text-align: left;"><strong>Days 1–3</strong></td>
+<td style="text-align: left;">Von Neumann hardware, Linux command terminals, Git repository pushing.</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p>[!TIP]<br />
+Executing this unified 3-day study plan gives you a comprehensive systems and coding base. Instead of repeating basic Linux terminal commands or Git config instructions in 11 different roadmaps, you address them all in one focused burst, establishing a single clean workspace directory to house all of them.</p>
+</blockquote>
+    </div>
+</body>
+</html>
