@@ -1,0 +1,324 @@
+# Master Project Portfolio — Ideas, Architecture Splits & Roadmaps
+
+Every project you've confirmed, plus the three new additions (Product Analysis System, Smart Electricity Monitoring + Auto Power-Off, SMS-Triggered Location Responder). For each: the core idea, exactly which language handles which part of the system, and a phased roadmap with the language and tech stack tagged at every step.
+
+---
+
+# PYTHON-PRIMARY PROJECTS
+
+## 1. AI Job Application Automation Platform
+
+**Idea:** Automatically finds relevant job postings across multiple job portals, tailors your resume/answers using an LLM, and submits applications — removing the manual grind of job hunting.
+
+**Architecture Split by Language**
+| Language | Component | Responsibility |
+|---|---|---|
+| **Go** | Portal Orchestrator | Concurrently visits and polls *multiple job portals* (LinkedIn, Indeed, Naukri, etc.) on a schedule, using goroutines so checking 10+ sites doesn't happen one-by-one; pushes "new job found" events onto a Redis queue |
+| **Python** | Scraper & LLM Worker | Pulls jobs off the queue; uses Selenium/Playwright to open the actual application form; calls an LLM API to tailor the resume/cover letter/answers to that specific posting; submits the form |
+| **Redis** | Message Queue | The hand-off point between Go's orchestrator and Python's workers — decouples "finding jobs" from "applying to jobs" |
+
+**Roadmap**
+| Phase | Task | Language | Tech Stack |
+|---|---|---|---|
+| 0 | Define target job portals & scope (which sites, what job titles/filters) | — | Planning only |
+| 1 | Build the Python scraper for **one** portal first, fully working end-to-end | Python | Selenium/Playwright |
+| 2 | Add LLM-based resume/answer tailoring to that single-portal flow | Python | OpenAI/Anthropic API, LangChain (optional) |
+| 3 | Build the Go orchestrator that polls that one portal on a schedule | Go | net/http, goroutines, `time.Ticker` |
+| 4 | Introduce Redis as the queue between Go (finds jobs) and Python (applies) | Go + Python | Redis, `go-redis`, `redis-py` |
+| 5 | Extend the orchestrator to poll multiple portals concurrently | Go | Goroutines, worker pool pattern |
+| 6 | Extend Python workers to handle each portal's different form structure | Python | Selenium/Playwright, per-site adapter pattern |
+| 7 | Add retry logic + failure logging (a portal's layout changes, a form fails) | Go + Python | Structured logging, retry-with-backoff |
+| 8 | Add a simple dashboard: jobs found, applications sent, success rate | Python (Streamlit) or JS (React) | Streamlit / React |
+| 9 | Deploy: Go orchestrator + Redis + Python workers, containerized | Go + Python | Docker, Docker Compose |
+
+---
+
+## 2. AI Media Content Creation → Instagram Auto-Post
+
+**Idea:** Give it a word or theme, it generates an image and caption using AI, and posts it to Instagram automatically (or as a scheduled/reviewed post).
+
+**Architecture Split by Language**
+| Language | Component | Responsibility |
+|---|---|---|
+| **Python** | Entire pipeline | Caption generation (LLM API) → image generation (Stable Diffusion/DALL·E API) → posting (Instagram Graph API) → scheduling (APScheduler) |
+
+This one is intentionally single-language — the whole pipeline is a sequence of API calls and light orchestration, which doesn't benefit from splitting across languages the way a high-concurrency system would.
+
+**Roadmap**
+| Phase | Task | Language | Tech Stack |
+|---|---|---|---|
+| 0 | Set up Instagram Business account + Graph API access (dev mode) | — | Meta for Developers |
+| 1 | Build caption generation from a theme/word | Python | LLM API |
+| 2 | Build image generation from the same theme | Python | Stable Diffusion API / DALL·E API |
+| 3 | Build the Instagram publish flow (upload media container → publish) | Python | Instagram Graph API, `requests` |
+| 4 | Add a review/approval step before auto-posting | Python | Simple CLI prompt or small Flask review UI |
+| 5 | Add scheduling (post at a set time) | Python | APScheduler / cron |
+| 6 | Add logging of what was generated/posted, for review later | Python | SQLite |
+| 7 | Deploy as a scheduled script on a small server | Python | Docker, cron job |
+
+---
+
+## 3. Product Analysis System (Nutrition / Chemical / Material Quality)
+
+**Idea:** Scan or look up a product (food, cosmetics, or general goods like shoes) and get an analysis — nutrition breakdown vs. your daily needs, flagged chemicals in cosmetics, or a durability/quality/affordability estimate for general products.
+
+**Architecture Split by Language**
+| Language | Component | Responsibility |
+|---|---|---|
+| **Python** | Analysis Engine & Backend | Fetches product data (Open Food Facts API for food), runs the scoring/flagging logic, computes personalized nutrient targets, exposes results via a REST API |
+| **Java** | Mobile App | Android app that scans a barcode/label via camera, calls the Python backend, displays the result |
+
+**Roadmap**
+| Phase | Task | Language | Tech Stack |
+|---|---|---|---|
+| 0 | Scope v1: start with food/nutrition only, add cosmetics/general goods later | — | Planning |
+| 1 | Build the backend API wrapping the Open Food Facts public API | Python | FastAPI, Open Food Facts API |
+| 2 | Build the personalized nutrient-target calculator (based on age/weight/goal) | Python | Basic formulas (Mifflin-St Jeor or similar), no ML needed yet |
+| 3 | Build the Android scanning UI (barcode scan → send to backend → show result) | Java | Android SDK, ML Kit Barcode Scanning |
+| 4 | Add the cosmetics/chemical-flagging module (rule-based ingredient list matching) | Python | Rule-based keyword matching against a known "flagged ingredients" list |
+| 5 | Add OCR fallback for products with no barcode match (read ingredient text directly) | Python | Tesseract OCR |
+| 6 | Add the general-goods module (shoes, etc.) as a simpler rule-based checklist (material type, price-per-durability estimate) | Python | Rule-based scoring, manual data entry initially |
+| 7 | Testing: verify scoring logic against known "good"/"bad" product examples | Python | Pytest |
+| 8 | Deploy backend, package Android app | Python + Java | Docker (backend), APK build (Android) |
+
+---
+
+# JAVA-PRIMARY PROJECTS
+
+## 4. Notification Manager & Organizer
+
+**Idea:** Captures all phone notifications (not just active ones) into a searchable, categorized, reviewable history — solving the "I cleared it and now I can't find it" problem.
+
+**Architecture Split by Language**
+| Language | Component | Responsibility |
+|---|---|---|
+| **Java** | Entire app | `NotificationListenerService` for capture, Room database for storage, categorization logic, UI |
+
+**Roadmap**
+| Phase | Task | Language | Tech Stack |
+|---|---|---|---|
+| 0 | Problem statement + feature list | — | Planning |
+| 1 | Implement `NotificationListenerService`, request permission, validate capture works | Java | Android SDK |
+| 2 | Design Room database schema (notification, app, timestamp, category, archived flag) | Java | Room (SQLite) |
+| 3 | Build MVP: live list of captured notifications | Java | RecyclerView, ViewModel/LiveData |
+| 4 | Add rule-based categorization (by app package name / keywords) | Java | Plain logic, no ML needed initially |
+| 5 | Add search, filter by category/app, swipe-to-archive | Java | Android UI components |
+| 6 | Unit test the categorization logic | Java | JUnit |
+| 7 | CI/CD: auto-build + test on push | Java | GitHub Actions, Gradle |
+| 8 | Docs + demo video/screenshots | — | README |
+
+---
+
+## 5. GC Pause Visualizer (Spring Boot Dashboard)
+
+**Idea:** Visualizes JVM garbage collection pause behavior across different GC algorithms (G1, ZGC, Parallel) — demonstrates deep JVM understanding.
+
+**Architecture Split by Language**
+| Language | Component | Responsibility |
+|---|---|---|
+| **Java** | Entire app | GC log parsing, JMX live polling, Spring Boot REST API, dashboard backend |
+
+**Roadmap**
+| Phase | Task | Language | Tech Stack |
+|---|---|---|---|
+| 0 | Study JVM GC internals (heap generations, GC algorithms, log format) | — | Oracle GC tuning docs |
+| 1 | Generate real GC logs from a small memory-churning test program | Java | `-Xlog:gc*` flag |
+| 2 | Build & unit-test the log parser module in isolation | Java | JUnit5 |
+| 3 | Wrap the parser in a Spring Boot REST API | Java | Spring Boot |
+| 4 | Add live JMX polling as an alternative data source (stretch) | Java | `java.lang.management`, JMX |
+| 5 | Build a synthetic load generator to produce interesting GC data | Java | Plain Java |
+| 6 | Build the dashboard frontend (pause-time trends over time) | Java (Thymeleaf) or JS (Chart.js) | Thymeleaf / Chart.js |
+| 7 | CI/CD: tests + Docker build on push | Java | GitHub Actions, Docker |
+| 8 | Docs explaining GC concepts + architecture + screenshots | — | README |
+
+---
+
+## 6. SMS-Triggered Location Responder
+
+**Idea:** Text a keyword from an approved contact's number, and your phone automatically replies with your current GPS location — for when you forget to answer calls but someone needs to know where you are.
+
+**Architecture Split by Language**
+| Language | Component | Responsibility |
+|---|---|---|
+| **Java** | Entire app | SMS `BroadcastReceiver`, keyword/whitelist matching, GPS location fetch, SMS reply, local log |
+
+**Roadmap**
+| Phase | Task | Language | Tech Stack |
+|---|---|---|---|
+| 0 | Define trigger keyword(s) and the approved-contact whitelist design | — | Planning |
+| 1 | Implement `BroadcastReceiver` for incoming SMS, request required permissions | Java | Android SDK |
+| 2 | Add whitelist check (only approved numbers can trigger it) | Java | SharedPreferences or Room for storing whitelist |
+| 3 | Add keyword matching on message body | Java | Plain string matching |
+| 4 | Fetch current GPS location on trigger | Java | FusedLocationProviderClient |
+| 5 | Send location back via SMS reply | Java | SmsManager |
+| 6 | Add local logging of every triggered share (who, when) for your own visibility | Java | Room (SQLite) |
+| 7 | Testing: simulate incoming SMS from whitelisted/non-whitelisted numbers | Java | JUnit + manual device testing |
+| 8 | Docs: explain the privacy-by-design logging choice explicitly | — | README |
+
+---
+
+# GO-PRIMARY PROJECTS
+
+## 7. Food Court Multi-Vendor QR Ordering System
+
+**Idea:** Customers scan a QR code, browse each shop's menu, order, and get a unique pickup number — replacing manual shouting/searching for who ordered what, plus one aggregated bill across shops.
+
+**Architecture Split by Language**
+| Language | Component | Responsibility |
+|---|---|---|
+| **Go** | Backend | Menu APIs, order placement, unique order ID + QR generation, order status state machine, bill aggregation, UPI deep-link generation |
+| **JavaScript** *(optional, Option A from earlier)* | Frontend | React app for browsing menus, placing orders, live order-status updates via WebSocket |
+
+**Roadmap**
+| Phase | Task | Language | Tech Stack |
+|---|---|---|---|
+| 0 | Lock scope: IN = menu, ordering, unique ID, QR pickup, aggregated bill. OUT = payment gateway, multi-location | — | Planning |
+| 1 | Design data model: Shop, MenuItem, Order, Bill | Go | Plain structs |
+| 2 | Build MVP API: list shops, view menu, place order, get order status | Go | `net/http`, SQLite |
+| 3 | Generate unique order token + render as QR code | Go | QR code Go library |
+| 4 | Implement order status state machine (Placed → Preparing → Ready → Collected) | Go | Plain logic |
+| 5 | Build bill aggregation across shops + UPI deep-link generation | Go | Plain logic, `upi://pay?...` link builder |
+| 6 | Build the frontend (simple HTML/JS, or full React if going with Option A) | JavaScript | React or vanilla JS |
+| 7 | Add WebSocket-based live order-status push (optional upgrade) | Go + JavaScript | `gorilla/websocket`, Socket.io/native WS on frontend |
+| 8 | Table-driven tests for state machine + bill aggregation | Go | Go `testing` package |
+| 9 | Deploy: single Go binary + SQLite on a small VM | Go | Docker (optional) |
+
+---
+
+## 8. High-Concurrency Reservation System (Job Queue + Booking Simulation, merged)
+
+**Idea:** A generalized "many people racing for limited slots at a precise moment" system — built as a Redis-backed job queue and reservation engine, demoable both as a background task processor and as a mock high-demand booking simulator (the legal, safe reframe of the ticket-booking idea).
+
+**Architecture Split by Language**
+| Language | Component | Responsibility |
+|---|---|---|
+| **Go** | Entire backend | Worker pool (goroutines), Redis Streams consumer groups for at-least-once job delivery, seat/slot locking logic (optimistic or Redis-based distributed locks), REST API for job/reservation status |
+
+**Roadmap**
+| Phase | Task | Language | Tech Stack |
+|---|---|---|---|
+| 0 | Define scope: general job queue AND a "limited slots, high demand" reservation mode | — | Planning |
+| 1 | Build basic job submission + Redis queue + worker pool | Go | Redis Streams, goroutines |
+| 2 | Add consumer groups for at-least-once delivery (handle worker crash mid-job) | Go | Redis Streams consumer groups |
+| 3 | Add retry logic with backoff for failed jobs | Go | Plain retry logic |
+| 4 | Add `/jobs/:id/status` polling endpoint | Go | `net/http` |
+| 5 | Build the reservation/seat-locking mode: limited seats, opens at a set time | Go | Redis distributed locks (`SETNX` pattern or Redlock) |
+| 6 | Load-test the reservation mode against your own mock booking server | Go | A simple load-testing script (Go or `k6`) |
+| 7 | Testing: race conditions, double-booking prevention | Go | Go `testing`, concurrent test scenarios |
+| 8 | Deploy + document both use-cases (queue processor / reservation engine) clearly | Go | Docker |
+
+---
+
+# RUST-PRIMARY PROJECTS
+
+## 9. Personal Password Manager
+
+**Idea:** A CLI tool storing credentials locally, encrypted at rest, unlocked with a master password — memory safety genuinely matters here, which is why Rust is the right language choice, not just a resume keyword.
+
+**Architecture Split by Language**
+| Language | Component | Responsibility |
+|---|---|---|
+| **Rust** | Entire tool | CLI (Clap), key derivation (Argon2), encryption (AES-256-GCM), encrypted local storage, memory zeroing |
+
+**Roadmap**
+| Phase | Task | Language | Tech Stack |
+|---|---|---|---|
+| 0 | Study crypto fundamentals: salts, key derivation, authenticated encryption | — | Reading/notes |
+| 1 | Build CLI skeleton: `add`, `get`, `list`, `delete`, `init` | Rust | `clap` |
+| 2 | Implement master password → key derivation | Rust | `argon2` crate |
+| 3 | Design encrypted storage format (single encrypted blob or SQLite w/ encrypted column) | Rust | `aes-gcm` crate, `serde` |
+| 4 | Wire CRUD operations against the encrypted store | Rust | Plain Rust |
+| 5 | Add memory zeroing for master password/derived key after use | Rust | `zeroize` crate |
+| 6 | Test full encrypt→store→retrieve→decrypt round trip + wrong-password rejection | Rust | Rust `#[test]` |
+| 7 | Cross-compile for Linux/macOS/Windows | Rust | `cargo build --release` per target |
+| 8 | Docs + explicit "not production-audited" disclaimer | — | README |
+
+---
+
+## 10. Static Site Generator (optional / personal use)
+
+**Idea:** A Jekyll/Hugo-style tool that turns Markdown files into a static HTML site — for hosting your own blog/portfolio, built to show Rust's speed and craftsmanship.
+
+**Architecture Split by Language**
+| Language | Component | Responsibility |
+|---|---|---|
+| **Rust** | Entire tool | Markdown parsing, templating, CLI (`build`, `serve`, `new post`) |
+
+**Roadmap**
+| Phase | Task | Language | Tech Stack |
+|---|---|---|---|
+| 0 | Decide on a template format (simple HTML placeholders is enough) | — | Planning |
+| 1 | Build Markdown → HTML conversion | Rust | `pulldown-cmark` crate |
+| 2 | Add templating (header/footer wrapping) | Rust | Basic string templating or `tera` crate |
+| 3 | Build CLI commands: `build`, `new post`, `serve` (local preview server) | Rust | `clap` |
+| 4 | Benchmark build time vs. a Python-based generator | Rust | `cargo bench` or simple timing |
+| 5 | Deploy your own site using it (GitHub Pages/Netlify) | Rust | Static hosting |
+
+---
+
+# JAVASCRIPT-PRIMARY PROJECTS
+
+## 11. Real-Time Shared Task/Study Coordinator
+
+**Idea:** A shared task/chore/study board where multiple people (roommates, study group) see updates instantly, live, without refreshing — showcasing JavaScript's event-loop-driven concurrency model.
+
+**Architecture Split by Language**
+| Language | Component | Responsibility |
+|---|---|---|
+| **JavaScript (Node.js)** | Backend | Express REST API for CRUD, Socket.io for real-time broadcast to all connected clients in a group |
+| **JavaScript (React)** | Frontend | Live-updating UI reflecting task changes instantly |
+
+**Roadmap**
+| Phase | Task | Language | Tech Stack |
+|---|---|---|---|
+| 0 | Define entities: Group, Task, Member | — | Planning |
+| 1 | Build REST core: create group, add task, mark complete | JavaScript | Node.js, Express, MongoDB |
+| 2 | Wire Socket.io: broadcast task changes to all clients in that group | JavaScript | Socket.io |
+| 3 | Add timestamp-based conflict resolution for near-simultaneous edits | JavaScript | Plain logic |
+| 4 | Build the React frontend with live updates | JavaScript | React |
+| 5 | Add lightweight room-code/invite-link joining | JavaScript | Express |
+| 6 | Test the conflict-resolution logic specifically | JavaScript | Jest |
+| 7 | Deploy backend + frontend | JavaScript | Render/Railway, MongoDB Atlas |
+
+---
+
+# POLYGLOT-BY-NECESSITY PROJECT
+
+## 12. Smart Electricity Monitoring System (+ Auto Power-Off for TV/AC)
+
+**Idea:** Sensors on individual sockets track how long and how much current each appliance draws, feeding a dashboard that shows which appliances waste power — extended with automatic power cutoff for devices (TV, AC) left idle for too long, to reduce the electricity bill.
+
+**Architecture Split by Language**
+| Language | Component | Responsibility |
+|---|---|---|
+| **Rust (or C/C++)** | Sensor Firmware | Runs on the microcontroller (ESP32), reads current draw per socket, publishes readings via MQTT, triggers a relay to cut power when idle-threshold is crossed |
+| **Go** | Ingestion Backend | Consumes MQTT messages from many sockets concurrently, writes to a time-series database, decides (and sends) the idle-cutoff command back to the firmware |
+| **Python** | Analytics | Runs pattern analysis over stored data — "this appliance is wasteful," idle-time detection, daily/weekly usage reports |
+
+**Roadmap**
+| Phase | Task | Language | Tech Stack |
+|---|---|---|---|
+| 0 | Scope hardware: which sockets, which sensor (current clamp/INA219), which microcontroller (ESP32) | — | Hardware planning |
+| 1 | Build firmware to read current draw and publish over MQTT | Rust (`esp-rs`) or C++ | ESP32, MQTT (Mosquitto broker) |
+| 2 | Build the Go ingestion service consuming MQTT messages | Go | `paho.mqtt.golang`, TimescaleDB/InfluxDB |
+| 3 | Store readings in a time-series database | Go | TimescaleDB or InfluxDB |
+| 4 | Build the idle-detection logic (near-zero draw for N minutes → flag) | Go | Plain logic |
+| 5 | Add the relay cutoff command sent back to firmware over MQTT | Go + Rust/C++ | MQTT (bidirectional topic) |
+| 6 | Build Python analytics: per-appliance usage patterns, wasteful-device flagging | Python | Pandas, scheduled job |
+| 7 | Build the dashboard | Grafana or Python (Streamlit) | Grafana / Streamlit |
+| 8 | Test the full loop: sensor reading → cutoff decision → relay trigger | Go + Rust/C++ | Manual hardware test |
+| 9 | Document the full pipeline (sensor → broker → backend → analytics → dashboard) | — | README with architecture diagram |
+
+---
+
+# Final Language Tally
+
+| Language | Projects | Count |
+|---|---|---|
+| **Python** | Job Automation Platform (shared w/ Go), Media Content Automation, Product Analysis System (shared w/ Java), Electricity Analytics (shared w/ Go/Rust) | 4 (2 solo, 2 shared) |
+| **Java** | Notification Manager, GC Pause Visualizer, SMS Location Responder, Product Analysis App (shared w/ Python) | 4 (3 solo, 1 shared) |
+| **Go** | Job Automation Orchestrator (shared), Food Court Ordering, High-Concurrency Reservation System, Electricity Ingestion (shared) | 4 (2 solo, 2 shared) |
+| **Rust** | Password Manager, Static Site Generator (optional), Electricity Firmware (shared, or C++ alternative) | 3 (2 solo, 1 shared) |
+| **JavaScript** | Real-Time Task Coordinator, Food Court Frontend (optional, shared) | 2 (1 solo, 1 shared) |
+
+**12 total projects, 5 languages, each with a genuine role in at least one polyglot system** — this is a strong, coherent portfolio that tells one consistent story: you understand how to pick the right tool for each part of a system, not just write code in five languages independently.
