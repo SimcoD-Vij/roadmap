@@ -1,3 +1,6 @@
+# The Complete Hardware Universe — Integrated Master Roadmap
+## Every Domain · Every Prerequisite · Every Project · Day-by-Day Schedule
+### Varghese · Sentigrade Project · November 2026
 
 ---
 
@@ -1425,3 +1428,7 @@ power management and I/O → submitting for fabrication. This is the complete pa
 | All modules | 750 | Open any manufactured hardware object and understand, diagnose, modify, or rebuild it. |
 
 ---
+
+*Document version: November 2026 | Integrated: original roadmap + materials knowledge +
+mathematics prerequisites + other discipline gaps + daily schedule + checkpoint projects +
+combinatorial learning map | Context: Varghese / Sentigrade project*
